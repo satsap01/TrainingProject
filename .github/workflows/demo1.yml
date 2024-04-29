@@ -1,8 +1,30 @@
-name: hello-world
+#define workflow
+name: Deployment using a single Job
+#event that triggers workflow
 on: push
+#jobs
 jobs:
-  my-job:
+  # name of job
+  deploy:
+    #specify runner for the job
     runs-on: ubuntu-latest
+    #Steps
     steps:
-      - name: my-step
-        run: echo "Hello World!"
+      #STEP-1
+      - name: Get Code
+        uses: actions/checkout@v3
+      #STEP-2
+      - name: Install Dependencies
+        run: npm ci
+      #STEP-3
+      - name: Lint
+        run: npm run lint
+      #STEP-4
+      - name: Test
+        run: npm run test
+      #STEP-5
+      - name: Build Code
+        run: npm run build
+      #STEP-6
+      - name: Deploy Code
+        run: echo "Deploying..."
